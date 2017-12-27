@@ -1,5 +1,9 @@
 package linchange.com.core.app;
 
+import com.joanzapata.iconify.IconFontDescriptor;
+import com.joanzapata.iconify.Iconify;
+
+import java.util.ArrayList;
 import java.util.WeakHashMap;
 
 /**
@@ -10,6 +14,9 @@ import java.util.WeakHashMap;
 public class Configurator {
     //配置信息列表
     private static final WeakHashMap<String, Object> AWESOME_CONFIGS = new WeakHashMap<>();
+
+    //图标列表
+    private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
 
     //构造器
     private Configurator() {
@@ -71,5 +78,25 @@ public class Configurator {
     final <T> T getConfiguration(Enum<ConfigType> key) {
         checkConfiguration(); //检查是否配置完成
         return (T) AWESOME_CONFIGS.get(key.name());
+    }
+
+    private void initIcons() {
+        if (ICONS.size() > 0) { //图标列表内容大于0
+            //使用第0个图标获取初始化器
+            final Iconify.IconifyInitializer initializer = Iconify.with(ICONS.get(0));
+            for (int i = 1; i < ICONS.size(); i++) {
+                initializer.with(ICONS.get(i)); //初始化器对剩下的图标进行初始化
+            }
+        }
+    }
+
+    /**
+     * 添加图标
+     * @param descriptor 图标描述
+     * @return 配置器对象
+     */
+    public final Configurator withIcon(IconFontDescriptor descriptor) {
+        ICONS.add(descriptor); //将图标添加到图标列表
+        return this;
     }
 }
