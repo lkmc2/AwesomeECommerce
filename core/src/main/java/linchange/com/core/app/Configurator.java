@@ -4,7 +4,7 @@ import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 
 import java.util.ArrayList;
-import java.util.WeakHashMap;
+import java.util.HashMap;
 
 /**
  * Created by lkmc2 on 2017/12/27.
@@ -13,7 +13,7 @@ import java.util.WeakHashMap;
 
 public class Configurator {
     //配置信息列表
-    private static final WeakHashMap<String, Object> AWESOME_CONFIGS = new WeakHashMap<>();
+    private static final HashMap<String, Object> AWESOME_CONFIGS = new HashMap<>();
 
     //图标列表
     private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
@@ -40,13 +40,14 @@ public class Configurator {
      * 获取配置信息列表
      * @return 配置信息列表
      */
-    final WeakHashMap<String, Object> getAwesomeConfigs() {
+    final HashMap<String, Object> getAwesomeConfigs() {
         return AWESOME_CONFIGS;
     }
 
     //设置配置完成
     public final void configure() {
-        AWESOME_CONFIGS.put(ConfigType.CONFIG_READY.name(), true);
+        initIcons(); //初始化图标
+        AWESOME_CONFIGS.put(ConfigType.CONFIG_READY.name(), true); //设置配置完成
     }
 
     /**
@@ -80,6 +81,9 @@ public class Configurator {
         return (T) AWESOME_CONFIGS.get(key.name());
     }
 
+    /**
+     * 初始化图标
+     */
     private void initIcons() {
         if (ICONS.size() > 0) { //图标列表内容大于0
             //使用第0个图标获取初始化器

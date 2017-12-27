@@ -2,6 +2,7 @@ package linchange.com.core.app;
 
 import android.content.Context;
 
+import java.util.HashMap;
 import java.util.WeakHashMap;
 
 /**
@@ -25,8 +26,16 @@ public class Awesome {
      * 获取配置信息
      * @return 配置信息
      */
-    private static WeakHashMap<String, Object> getConfigurations() {
+    private static HashMap<String, Object> getConfigurations() {
         return Configurator.getInstance().getAwesomeConfigs();
+    }
+
+    /**
+     * 获取全局应用上下文
+     * @return 全局应用上下文
+     */
+    public static Context getApplication() {
+        return (Context) getConfigurations().get(ConfigType.APPLICATION_CONTEXT.name());
     }
 
 }
