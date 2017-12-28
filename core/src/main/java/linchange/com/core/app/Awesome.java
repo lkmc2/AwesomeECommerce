@@ -3,7 +3,6 @@ package linchange.com.core.app;
 import android.content.Context;
 
 import java.util.HashMap;
-import java.util.WeakHashMap;
 
 /**
  * Created by lkmc2 on 2017/12/27.
