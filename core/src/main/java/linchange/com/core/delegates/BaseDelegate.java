@@ -20,9 +20,9 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     @SuppressWarnings("SpellCheckingInspection")
     private Unbinder mUnbinder = null; //Butterknife的未绑定器
 
-    public abstract void onBindView(@Nullable Bundle saveInstanceState, View rootView); //绑定视图
-
     public abstract Object setLayout(); //设置布局
+
+    public abstract void onBindView(@Nullable Bundle saveInstanceState, View rootView); //绑定视图
 
     @Nullable
     @Override
@@ -36,7 +36,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
             rootView = (View) setLayout(); //将对象转换成View设置给根界面
         }
         if (rootView != null) { //根界面非空
-            mUnbinder = ButterKnife.bind(this, rootView); //设置未绑定器绑定的对象
+            mUnbinder = ButterKnife.bind(this, rootView); //设置未绑定器绑定的Fragment与布局
             onBindView(savedInstanceState, rootView); //绑定视图
         }
 
