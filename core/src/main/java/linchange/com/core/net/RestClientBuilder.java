@@ -1,12 +1,12 @@
-package linchange.com.net;
+package linchange.com.core.net;
 
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import linchange.com.net.callback.IError;
-import linchange.com.net.callback.IFailure;
-import linchange.com.net.callback.IRequest;
-import linchange.com.net.callback.ISuccess;
+import linchange.com.core.net.callback.IError;
+import linchange.com.core.net.callback.IFailure;
+import linchange.com.core.net.callback.IRequest;
+import linchange.com.core.net.callback.ISuccess;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 

@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import linchange.com.core.delegates.AwesomeDelegate;
-import linchange.com.net.RestClient;
-import linchange.com.net.callback.IError;
-import linchange.com.net.callback.IFailure;
-import linchange.com.net.callback.ISuccess;
+import linchange.com.core.net.RestClient;
+import linchange.com.core.net.callback.IError;
+import linchange.com.core.net.callback.IFailure;
+import linchange.com.core.net.callback.ISuccess;
 
 /**
  * Created by lkmc2 on 2017/12/29.

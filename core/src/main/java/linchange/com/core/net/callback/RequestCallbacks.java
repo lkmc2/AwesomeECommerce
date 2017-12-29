@@ -1,4 +1,4 @@
-package linchange.com.net.callback;
+package linchange.com.core.net.callback;
 
 import retrofit2.Call;
 import retrofit2.Callback;

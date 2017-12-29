@@ -1,4 +1,4 @@
-package linchange.com.net.callback;
+package linchange.com.core.net.callback;
 
 /**
  * Created by lkmc2 on 2017/12/29.

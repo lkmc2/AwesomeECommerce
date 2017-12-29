@@ -1,4 +1,4 @@
-package linchange.com.net;
+package linchange.com.core.net;
 
 import java.util.Map;
 

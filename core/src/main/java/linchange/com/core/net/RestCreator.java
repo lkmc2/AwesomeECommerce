@@ -1,4 +1,4 @@
-package linchange.com.net;
+package linchange.com.core.net;
 
 import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;

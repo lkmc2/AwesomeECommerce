@@ -1,4 +1,4 @@
-package linchange.com.net;
+package linchange.com.core.net;
 
 /**
  * Created by lkmc2 on 2017/12/29.
