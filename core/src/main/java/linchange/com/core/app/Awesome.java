@@ -25,7 +25,7 @@ public class Awesome {
      * 获取配置信息
      * @return 配置信息
      */
-    private static HashMap<String, Object> getConfigurations() {
+    public static HashMap<String, Object> getConfigurations() {
         return Configurator.getInstance().getAwesomeConfigs();
     }
 
