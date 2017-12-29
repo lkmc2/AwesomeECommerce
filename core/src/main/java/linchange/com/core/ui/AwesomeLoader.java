@@ -31,6 +31,15 @@ public class AwesomeLoader {
     /**
      * 展示进度加载器
      * @param context 上下文
+     * @param type 进度条类型（枚举）
+     */
+    public static void showLoading(Context context, Enum<LoaderStyle> type) {
+        showLoading(context, type.name()); //展示进度加载器
+    }
+
+    /**
+     * 展示进度加载器
+     * @param context 上下文
      * @param type 进度条类型
      */
     public static void showLoading(Context context, String type) {
@@ -51,7 +60,7 @@ public class AwesomeLoader {
             WindowManager.LayoutParams lp = dialogWindow.getAttributes(); //获取屏幕参数
             lp.width = deviceWidth / LOADER_SIZE_SCALE; //设置参数的宽
             lp.height = deviceHeight / LOADER_SIZE_SCALE; //设置参数的高
-            lp.height = lp.height + deviceHeight / LOADER_SIZE_SCALE;
+            lp.height = lp.height + deviceHeight / LOADER_OFFSET_SCALE;
             lp.gravity = Gravity.CENTER; //居中对齐
         }
 

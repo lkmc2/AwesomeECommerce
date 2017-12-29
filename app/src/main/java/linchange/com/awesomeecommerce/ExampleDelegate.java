@@ -32,6 +32,7 @@ public class ExampleDelegate extends AwesomeDelegate {
 
     private void testRestClient() {
         RestClient.builder()
+                .loader(getContext())
                 .url("http://news.baidu.com/")
                 .params("", "")
                 .success(new ISuccess() {

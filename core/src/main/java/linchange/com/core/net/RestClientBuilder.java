@@ -1,5 +1,7 @@
 package linchange.com.core.net;
 
+import android.content.Context;
+
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -7,6 +9,7 @@ import linchange.com.core.net.callback.IError;
 import linchange.com.core.net.callback.IFailure;
 import linchange.com.core.net.callback.IRequest;
 import linchange.com.core.net.callback.ISuccess;
+import linchange.com.core.ui.LoaderStyle;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -16,13 +19,15 @@ import okhttp3.RequestBody;
  */
 
 public class RestClientBuilder {
-    private String mUrl; //请求网址
+    private String mUrl = null; //请求网址
     private static final Map<String, Object> PARAMS = RestCreator.getParams(); //请求参数列表
-    private IRequest mIRequest; //请求接口
-    private ISuccess mISuccess; //请求成功接口
-    private IFailure mIFailure; //请求失败接口
-    private IError mIError; //请求错误接口
-    private RequestBody mBody; //请求体
+    private IRequest mIRequest = null; //请求接口
+    private ISuccess mISuccess = null; //请求成功接口
+    private IFailure mIFailure = null; //请求失败接口
+    private IError mIError = null; //请求错误接口
+    private RequestBody mBody = null; //请求体
+    private Context mContext = null; //上下文
+    private LoaderStyle mLoaderStyle = null; //进度加载器样式
 
     //构造器
     RestClientBuilder() {
@@ -110,10 +115,34 @@ public class RestClientBuilder {
     }
 
     /**
+     * 设置进度加载器样式
+     * @param context 上下文
+     * @param style 进度加载器样式
+     * @return 请求客户端生成器
+     */
+    public final RestClientBuilder loader(Context context, LoaderStyle style) {
+        this.mContext = context;
+        this.mLoaderStyle = style;
+        return this;
+    }
+
+    /**
+     * 设置进度加载器样式（重载）
+     * @param context 上下文
+     * @return 请求客户端生成器
+     */
+    public final RestClientBuilder loader(Context context) {
+        this.mContext = context;
+        this.mLoaderStyle = LoaderStyle.BallClipRotatePulseIndicator;
+        return this;
+    }
+
+    /**
      * 构建新的网络请求生成器
      * @return 网络请求生成器
      */
     public final RestClient build() {
-        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIFailure, mIError, mBody);
+        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess,
+                mIFailure, mIError, mBody, mLoaderStyle, mContext);
     }
 }

@@ -1,5 +1,7 @@
 package linchange.com.core.net;
 
+import android.content.Context;
+
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -8,6 +10,8 @@ import linchange.com.core.net.callback.IFailure;
 import linchange.com.core.net.callback.IRequest;
 import linchange.com.core.net.callback.ISuccess;
 import linchange.com.core.net.callback.RequestCallbacks;
+import linchange.com.core.ui.AwesomeLoader;
+import linchange.com.core.ui.LoaderStyle;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +29,8 @@ public class RestClient {
     private final IFailure FAILURE; //请求失败接口
     private final IError ERROR; //请求错误接口
     private final RequestBody BODY; //请求体
+    private final LoaderStyle LOADER_STYLE; //进度加载器样式
+    private final Context CONTEXT; //上下文对象
 
     public RestClient(String url,
                       Map<String, Object> params,
@@ -32,7 +38,9 @@ public class RestClient {
                       ISuccess success,
                       IFailure failure,
                       IError error,
-                      RequestBody body) {
+                      RequestBody body,
+                      LoaderStyle loader_style,
+                      Context context) {
         this.URL = url;
         this.PARAMS.putAll(params);
         this.REQUEST = request;
@@ -40,6 +48,8 @@ public class RestClient {
         this.FAILURE = failure;
         this.ERROR = error;
         this.BODY = body;
+        this.LOADER_STYLE = loader_style;
+        this.CONTEXT = context;
     }
 
     /**
@@ -92,6 +102,10 @@ public class RestClient {
             REQUEST.onRequestStart(); //开始请求
         }
 
+        if (LOADER_STYLE != null) { //进度加载器样式非空
+            AwesomeLoader.showLoading(CONTEXT, LOADER_STYLE); //显示进度加载器
+        }
+
         switch (method) { //按照传入的请求方式生成call对象
             case GET:
                 call = service.get(URL, PARAMS);
@@ -119,6 +133,6 @@ public class RestClient {
      * @return 请求回调接口
      */
     private Callback<String> getRequestCallback() {
-        return new RequestCallbacks(REQUEST, SUCCESS, FAILURE, ERROR);
+        return new RequestCallbacks(REQUEST, SUCCESS, FAILURE, ERROR, LOADER_STYLE);
     }
 }
