@@ -22,10 +22,21 @@ public class RestCreator {
         public static final WeakHashMap<String, Object> PARAMS = new WeakHashMap<>();
     }
 
+    /**
+     * 获取请求参数列表
+     * @return 请求参数列表
+     */
     public static WeakHashMap<String, Object> getParams() {
         return ParamsHolder.PARAMS;
     }
 
+    /**
+     * 获取网络请求服务
+     * @return 网络请求服务
+     */
+    public static RestService getRestService() {
+        return RestServiceHolder.REST_SERVICE;
+    }
 
     //OkHttp控制器
     private static final class OKHttpHolder {

@@ -3,6 +3,7 @@ package linchange.com.awesomeecommerce;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Toast;
 
 import linchange.com.core.delegates.AwesomeDelegate;
 import linchange.com.net.RestClient;
@@ -26,13 +27,17 @@ public class ExampleDelegate extends AwesomeDelegate {
     //绑定视图
     @Override
     public void onBindView(@Nullable Bundle saveInstanceState, View rootView) {
+        testRestClient();
+    }
+
+    private void testRestClient() {
         RestClient.builder()
-                .url("")
+                .url("http://news.baidu.com/")
                 .params("", "")
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-
+                        Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                     }
                 })
                 .failure(new IFailure() {
@@ -47,6 +52,7 @@ public class ExampleDelegate extends AwesomeDelegate {
 
                     }
                 })
-                .build();
+                .build()
+                .get();
     }
 }
