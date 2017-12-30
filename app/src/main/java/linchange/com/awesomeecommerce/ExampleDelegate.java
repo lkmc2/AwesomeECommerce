@@ -2,6 +2,7 @@ package linchange.com.awesomeecommerce;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,11 +34,12 @@ public class ExampleDelegate extends AwesomeDelegate {
     private void testRestClient() {
         RestClient.builder()
                 .loader(getContext())
-                .url("http://news.baidu.com/")
+                .url("http://127.0.0.1/index")
                 .params("", "")
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
+                        Log.d("hahaha", response);
                         Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                     }
                 })

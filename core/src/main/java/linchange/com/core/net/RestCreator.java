@@ -6,9 +6,11 @@ import java.util.concurrent.TimeUnit;
 
 import linchange.com.core.app.Awesome;
 import linchange.com.core.app.ConfigKeys;
+import linchange.com.core.net.rx.RxRestService;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
@@ -30,14 +32,6 @@ public class RestCreator {
      */
     public static WeakHashMap<String, Object> getParams() {
         return ParamsHolder.PARAMS;
-    }
-
-    /**
-     * 获取网络请求服务
-     * @return 网络请求服务
-     */
-    public static RestService getRestService() {
-        return RestServiceHolder.REST_SERVICE;
     }
 
     //OkHttp控制器
@@ -71,14 +65,14 @@ public class RestCreator {
     //Retrofit控制器
     private static final class RetrofitHolder {
         //从全局配置中获取请求网址
-        private static final String BASE_URL =
-                (String) Awesome.getConfigurations().get(ConfigType.API_HOST.name());
+        private static final String BASE_URL = Awesome.getConfiguration(ConfigKeys.API_HOST);
 
         //Retrofit实例
         private static final Retrofit RETROFIT_CLIENT = new Retrofit.Builder()
                 .baseUrl(BASE_URL) //基础请求地址
-                .addConverterFactory(ScalarsConverterFactory.create()) //添加标准转换工厂
                 .client(OKHttpHolder.OK_HTTP_CLIENT) //设置请求的客户端为OkHttp实例
+                .addConverterFactory(ScalarsConverterFactory.create()) //添加标准转换工厂
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build(); //生成Retrofit实例
     }
 
@@ -87,6 +81,29 @@ public class RestCreator {
         //创建网络请求服务
         private static final RestService REST_SERVICE
                 = RetrofitHolder.RETROFIT_CLIENT.create(RestService.class);
+    }
+
+    /**
+     * 获取网络请求服务
+     * @return 网络请求服务
+     */
+    public static RestService getRestService() {
+        return RestServiceHolder.REST_SERVICE;
+    }
+
+    //网络请求服务控制器
+    private static final class RxRestServiceHolder {
+        //创建网络请求服务
+        private static final RxRestService REST_SERVICE
+                = RetrofitHolder.RETROFIT_CLIENT.create(RxRestService.class);
+    }
+
+    /**
+     * 获取网络请求服务
+     * @return 网络请求服务
+     */
+    public static RxRestService getRxRestService() {
+        return RxRestServiceHolder.REST_SERVICE;
     }
 
 }
