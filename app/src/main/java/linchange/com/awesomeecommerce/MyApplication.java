@@ -22,6 +22,7 @@ public class MyApplication extends Application {
         Awesome.init(this) //初始化全局配置对象
                 .withIcon(new FontAwesomeModule()) //配置图标
 //                .withIcon(new FontEcModule())
+//                .withInterceptor()
                 .withApiHost("http://127.0.0.1/") //配置主机地址
                 .configure(); //配置完成
     }

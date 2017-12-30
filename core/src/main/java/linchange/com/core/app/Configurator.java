@@ -6,6 +6,8 @@ import com.joanzapata.iconify.Iconify;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import okhttp3.Interceptor;
+
 /**
  * Created by lkmc2 on 2017/12/27.
  * 配置器
@@ -13,14 +15,17 @@ import java.util.HashMap;
 
 public class Configurator {
     //配置信息列表
-    private static final HashMap<String, Object> AWESOME_CONFIGS = new HashMap<>();
+    private static final HashMap<Object, Object> AWESOME_CONFIGS = new HashMap<>();
 
     //图标列表
     private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
 
+    //拦截器列表
+    private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
+
     //构造器
     private Configurator() {
-        AWESOME_CONFIGS.put(ConfigType.CONFIG_READY.name(), false); //设置配置未完成
+        AWESOME_CONFIGS.put(ConfigKeys.CONFIG_READY, false); //设置配置未完成
     }
 
     //静态内部类
@@ -40,14 +45,14 @@ public class Configurator {
      * 获取配置信息列表
      * @return 配置信息列表
      */
-    final HashMap<String, Object> getAwesomeConfigs() {
+    final HashMap<Object, Object> getAwesomeConfigs() {
         return AWESOME_CONFIGS;
     }
 
     //设置配置完成
     public final void configure() {
         initIcons(); //初始化图标
-        AWESOME_CONFIGS.put(ConfigType.CONFIG_READY.name(), true); //设置配置完成
+        AWESOME_CONFIGS.put(ConfigKeys.CONFIG_READY, true); //设置配置完成
     }
 
     /**
@@ -56,14 +61,14 @@ public class Configurator {
      * @return 控制器
      */
     public final Configurator withApiHost(String host) {
-        AWESOME_CONFIGS.put(ConfigType.API_HOST.name(), host);
+        AWESOME_CONFIGS.put(ConfigKeys.API_HOST, host);
         return this;
     }
 
     //检查配置信息是否配置完成
     private void checkConfiguration() {
         //获取是否配置完成
-        final boolean isReady = (boolean) AWESOME_CONFIGS.get(ConfigType.CONFIG_READY.name());
+        final boolean isReady = (boolean) AWESOME_CONFIGS.get(ConfigKeys.CONFIG_READY);
         if (!isReady) {
             throw new RuntimeException("配置信息未配置完成，请调用configure()方法");
         }
@@ -76,9 +81,13 @@ public class Configurator {
      * @return 指定类型的信息
      */
     @SuppressWarnings("unchecked")
-    final <T> T getConfiguration(Enum<ConfigType> key) {
+    final <T> T getConfiguration(Object key) {
         checkConfiguration(); //检查是否配置完成
-        return (T) AWESOME_CONFIGS.get(key.name());
+        final Object value = AWESOME_CONFIGS.get(key);
+        if (value == null) {
+            throw new RuntimeException(key.toString() + "的值为空");
+        }
+        return (T) value;
     }
 
     /**
@@ -92,6 +101,28 @@ public class Configurator {
                 initializer.with(ICONS.get(i)); //初始化器对剩下的图标进行初始化
             }
         }
+    }
+
+    /**
+     * 设置拦截器
+     * @param interceptor 拦截器
+     * @return 配置器对象
+     */
+    public final Configurator withInterceptor(Interceptor interceptor) {
+        INTERCEPTORS.add(interceptor); //将拦截器添加到拦截器列表
+        AWESOME_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS); //存储拦截器列表
+        return this;
+    }
+
+    /**
+     * 设置拦截器列表
+     * @param interceptors 拦截器列表
+     * @return 配置器对象
+     */
+    public final Configurator withInterceptors(ArrayList<Interceptor> interceptors) {
+        INTERCEPTORS.addAll(interceptors); //将传入的拦截器列表传入拦截器列表
+        AWESOME_CONFIGS.put(ConfigKeys.INTERCEPTOR, INTERCEPTORS); //存储拦截器列表
+        return this;
     }
 
     /**

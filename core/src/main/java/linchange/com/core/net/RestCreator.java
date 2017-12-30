@@ -1,10 +1,12 @@
 package linchange.com.core.net;
 
+import java.util.ArrayList;
 import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
 import linchange.com.core.app.Awesome;
-import linchange.com.core.app.ConfigType;
+import linchange.com.core.app.ConfigKeys;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -41,9 +43,27 @@ public class RestCreator {
     //OkHttp控制器
     private static final class OKHttpHolder {
         private static final int TIME_OUT = 60; //请求超时时间
+        //网络请求客户端生成器
+        private static final OkHttpClient.Builder BUILDER = new OkHttpClient.Builder();
+        //拦截器列表
+        private static final ArrayList<Interceptor> INTERCEPTORS = Awesome.getConfiguration(ConfigKeys.INTERCEPTOR);
+
+        /**
+         * 添加拦截器
+         * @return 网络请求客户端生成器
+         */
+        private static OkHttpClient.Builder addInterceptor() {
+            if (INTERCEPTORS != null && !INTERCEPTORS.isEmpty()) { //拦截器列表非空
+                for (Interceptor interceptor : INTERCEPTORS) { //遍历拦截器列表
+                    BUILDER.addInterceptor(interceptor); //将拦截器添加到网络请求客户端生成器
+                }
+            }
+            return BUILDER; //返回网络请求客户端生成器
+        }
 
         //OkHttp实例
-        private static final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient.Builder()
+        private static final OkHttpClient OK_HTTP_CLIENT =
+                addInterceptor() //添加拦截器
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS) //设置连接超时时间
                 .build(); //生成OkHttp实例
     }

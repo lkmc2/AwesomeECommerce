@@ -17,16 +17,27 @@ public class Awesome {
      * @return 配置器
      */
     public static Configurator init(Context context) {
-        getConfigurations().put(ConfigType.APPLICATION_CONTEXT.name(), context.getApplicationContext());
+        Configurator.getInstance().getAwesomeConfigs()
+                .put(ConfigKeys.APPLICATION_CONTEXT, context.getApplicationContext());
         return Configurator.getInstance();
     }
 
     /**
-     * 获取配置信息
-     * @return 配置信息
+     * 获取配置器
+     * @return 配置器
      */
-    public static HashMap<String, Object> getConfigurations() {
-        return Configurator.getInstance().getAwesomeConfigs();
+    public static Configurator getConfigurator() {
+        return Configurator.getInstance();
+    }
+
+    /**
+     * 获取某项配置信息
+     * @param key 配置信息名
+     * @param <T> 泛型
+     * @return 配置信息列表
+     */
+    public static <T> T getConfiguration(Object key) {
+        return getConfigurator().getConfiguration(key);
     }
 
     /**
@@ -34,7 +45,7 @@ public class Awesome {
      * @return 全局应用上下文
      */
     public static Context getApplicationContext() {
-        return (Context) getConfigurations().get(ConfigType.APPLICATION_CONTEXT.name());
+        return getConfiguration(ConfigKeys.APPLICATION_CONTEXT);
     }
 
 }
