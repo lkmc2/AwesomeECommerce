@@ -33,7 +33,7 @@ public class Awesome {
      * 获取全局应用上下文
      * @return 全局应用上下文
      */
-    public static Context getApplication() {
+    public static Context getApplicationContext() {
         return (Context) getConfigurations().get(ConfigType.APPLICATION_CONTEXT.name());
     }
 

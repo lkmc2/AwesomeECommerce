@@ -31,6 +31,10 @@ public class RestClientBuilder {
     private LoaderStyle mLoaderStyle = null; //进度加载器样式
     private File mFile = null; //文件
 
+    private String mDownloadDir = null; //下载路径
+    private String mExtension = null; //后缀名
+    private String mName = null; //下载文件名
+
     //构造器
     RestClientBuilder() {
     }
@@ -63,6 +67,26 @@ public class RestClientBuilder {
      */
     public final RestClientBuilder params(String key, Object value) {
         PARAMS.put(key, value); //将参数键值对参数参数列表
+        return this;
+    }
+
+    /**
+     * 设置下载存放路径
+     * @param dir 下载路径名
+     * @return 请求客户端生成器
+     */
+    public final RestClientBuilder dir(String dir) {
+        this.mDownloadDir = dir;
+        return this;
+    }
+
+    /**
+     * 设置下载后缀名
+     * @param extension 文件后缀名
+     * @return 请求客户端生成器
+     */
+    public final RestClientBuilder extension(String extension) {
+        this.mExtension = extension;
         return this;
     }
 
@@ -164,7 +188,7 @@ public class RestClientBuilder {
      * @return 网络请求生成器
      */
     public final RestClient build() {
-        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess,
-                mIFailure, mIError, mBody, mLoaderStyle, mFile, mContext);
+        return new RestClient(mUrl, PARAMS, mDownloadDir, mExtension, mName, mIRequest,
+                mISuccess, mIFailure, mIError, mBody, mLoaderStyle, mFile, mContext);
     }
 }

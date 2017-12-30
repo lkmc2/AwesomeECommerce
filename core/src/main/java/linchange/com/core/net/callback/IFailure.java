@@ -10,4 +10,5 @@ public interface IFailure {
      * 请求失败
      */
     void onFailure();
+
 }

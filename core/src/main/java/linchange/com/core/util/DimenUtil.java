@@ -17,7 +17,7 @@ public class DimenUtil {
      * @return 屏幕宽度
      */
     public static int getScreenWidth() {
-        final Resources resources = Awesome.getApplication().getResources();  //获取全局资源
+        final Resources resources = Awesome.getApplicationContext().getResources();  //获取全局资源
         final DisplayMetrics dm = resources.getDisplayMetrics(); //获取显示矩阵
         return dm.widthPixels; //返回屏幕宽
     }
@@ -27,7 +27,7 @@ public class DimenUtil {
      * @return 屏幕高度
      */
     public static int getScreenHeight() {
-        final Resources resources = Awesome.getApplication().getResources();  //获取全局资源
+        final Resources resources = Awesome.getApplicationContext().getResources();  //获取全局资源
         final DisplayMetrics dm = resources.getDisplayMetrics(); //获取显示矩阵
         return dm.heightPixels; //返回屏幕高
     }

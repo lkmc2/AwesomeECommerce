@@ -11,6 +11,7 @@ import linchange.com.core.net.callback.IFailure;
 import linchange.com.core.net.callback.IRequest;
 import linchange.com.core.net.callback.ISuccess;
 import linchange.com.core.net.callback.RequestCallbacks;
+import linchange.com.core.net.download.DownloadHandler;
 import linchange.com.core.ui.AwesomeLoader;
 import linchange.com.core.ui.LoaderStyle;
 import okhttp3.MediaType;
@@ -27,6 +28,9 @@ import retrofit2.Callback;
 public class RestClient {
     private final String URL; //请求网址
     private static final WeakHashMap<String, Object> PARAMS = RestCreator.getParams(); //请求参数
+    private final String DOWNLOAD_DIR; //下载路径
+    private final String EXTENSION; //下载后缀名
+    private final String NAME; //下载文件名
     private final IRequest REQUEST; //请求接口
     private final ISuccess SUCCESS; //请求成功接口
     private final IFailure FAILURE; //请求失败接口
@@ -38,6 +42,9 @@ public class RestClient {
 
     public RestClient(String url,
                       Map<String, Object> params,
+                      String download_dir,
+                      String extension,
+                      String name,
                       IRequest request,
                       ISuccess success,
                       IFailure failure,
@@ -48,6 +55,9 @@ public class RestClient {
                       Context context) {
         this.URL = url;
         this.PARAMS.putAll(params);
+        this.DOWNLOAD_DIR = download_dir;
+        this.EXTENSION = extension;
+        this.NAME = name;
         this.REQUEST = request;
         this.SUCCESS = success;
         this.FAILURE = failure;
@@ -107,6 +117,15 @@ public class RestClient {
      */
     public final void delete() {
         request(HttpMethod.DELETE);
+    }
+
+    /**
+     * 下载文件方法
+     */
+    public final void download() {
+        //使用下载器处理下载事件
+        new DownloadHandler(URL, DOWNLOAD_DIR, EXTENSION, NAME, REQUEST, SUCCESS, FAILURE, ERROR)
+                .handleDownload();
     }
 
     /**
