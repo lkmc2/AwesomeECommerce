@@ -2,9 +2,12 @@ package linchange.com.core.net;
 
 import java.util.Map;
 
+
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -44,7 +47,16 @@ public interface RestService {
     Call<String> post(@Url String url, @FieldMap Map<String, Object> params);
 
     /**
-     * 存储数据
+     * post提交原生数据请求
+     * @param url 请求网址
+     * @param body 请求体
+     * @return 网络数据
+     */
+    @POST
+    Call<String> postRaw(@Url String url, @Body RequestBody body);
+
+    /**
+     * put请求
      * @param url 请求网址
      * @param params 请求参数
      * @return 网络数据
@@ -54,7 +66,16 @@ public interface RestService {
     Call<String> put(@Url String url, @FieldMap Map<String, Object> params);
 
     /**
-     * 删除数据
+     * put原生数据请求
+     * @param url 请求网址
+     * @param body 请求体
+     * @return 网络数据
+     */
+    @PUT
+    Call<String> putRaw(@Url String url, @Body RequestBody body);
+
+    /**
+     * delete请求
      * @param url 请求网址
      * @param params 请求参数
      * @return 网络数据
@@ -80,5 +101,5 @@ public interface RestService {
      */
     @Multipart
     @GET
-    Call<ResponseBody> upload(@Url String url, @Part MultipartBody.Part file);
+    Call<String> upload(@Url String url, @Part MultipartBody.Part file);
 }

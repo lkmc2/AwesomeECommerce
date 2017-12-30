@@ -2,6 +2,7 @@ package linchange.com.core.net;
 
 import android.content.Context;
 
+import java.io.File;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -28,6 +29,7 @@ public class RestClientBuilder {
     private RequestBody mBody = null; //请求体
     private Context mContext = null; //上下文
     private LoaderStyle mLoaderStyle = null; //进度加载器样式
+    private File mFile = null; //文件
 
     //构造器
     RestClientBuilder() {
@@ -61,6 +63,26 @@ public class RestClientBuilder {
      */
     public final RestClientBuilder params(String key, Object value) {
         PARAMS.put(key, value); //将参数键值对参数参数列表
+        return this;
+    }
+
+    /**
+     * 设置上传文件
+     * @param file 上传的文件
+     * @return 请求客户端生成器
+     */
+    public final RestClientBuilder file(File file) {
+        this.mFile = file;
+        return this;
+    }
+
+    /**
+     * 设置上传文件（重载）
+     * @param file 上传的文件路径
+     * @return 请求客户端生成器
+     */
+    public final RestClientBuilder file(String file) {
+        this.mFile = new File(file);
         return this;
     }
 
@@ -143,6 +165,6 @@ public class RestClientBuilder {
      */
     public final RestClient build() {
         return new RestClient(mUrl, PARAMS, mIRequest, mISuccess,
-                mIFailure, mIError, mBody, mLoaderStyle, mContext);
+                mIFailure, mIError, mBody, mLoaderStyle, mFile, mContext);
     }
 }
