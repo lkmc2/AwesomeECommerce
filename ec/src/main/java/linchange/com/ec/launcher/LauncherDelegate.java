@@ -11,6 +11,7 @@ import java.util.Timer;
 import butterknife.BindView;
 import butterknife.OnClick;
 import linchange.com.core.delegates.AwesomeDelegate;
+import linchange.com.core.util.storage.AwesomePreference;
 import linchange.com.core.util.timer.BaseTimerTask;
 import linchange.com.core.util.timer.ITimerListener;
 import linchange.com.ec.R;
@@ -30,7 +31,11 @@ public class LauncherDelegate extends AwesomeDelegate implements ITimerListener 
 
     @OnClick(R2.id.tv_launcher_timer) //为文字控件设置点击事件
     void onClickTimerView() {
-
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+            checkIsShowScroll(); //判断是否展示滚动启动页
+        }
     }
 
     @Override
@@ -52,6 +57,19 @@ public class LauncherDelegate extends AwesomeDelegate implements ITimerListener 
         mTimer.schedule(task, 0, 1000); //设置计时任务到计时器
     }
 
+    /**
+     * 判断是否展示滚动启动页
+     */
+    private void checkIsShowScroll() {
+        //如果是第一次启动
+        if (!AwesomePreference.getAppFlag(ScrollLauncherType.HAS_FIRST_LAUNCHER_APP.name())) {
+            start(new LauncherScrollDelegate(), SINGLETASK); //启动滚动启动页
+        } else { //非第一次启动
+            //检查用户是否登录
+
+        }
+    }
+
     @Override
     public void onTimer() {
         getProxyActivity().runOnUiThread(new Runnable() { //代理界面运行在主线程
@@ -64,6 +82,7 @@ public class LauncherDelegate extends AwesomeDelegate implements ITimerListener 
                         if (mTimer != null) { //计时器非空
                             mTimer.cancel(); //取消计时
                             mTimer = null; //置空计时器
+                            checkIsShowScroll(); //判断是否展示滚动启动页
                         }
                     }
                 }

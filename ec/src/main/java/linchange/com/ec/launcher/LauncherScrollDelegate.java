@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import linchange.com.core.delegates.AwesomeDelegate;
 import linchange.com.core.util.launcher.LauncherHolderCreator;
+import linchange.com.core.util.storage.AwesomePreference;
 import linchange.com.ec.R;
 
 /**
@@ -56,6 +57,11 @@ public class LauncherScrollDelegate extends AwesomeDelegate implements OnItemCli
 
     @Override
     public void onItemClick(int position) {
+        if (position == INTEGERS.size() - 1) { //点击最后一张图片
+            //设置第一次启动app的标记
+            AwesomePreference.setAppFlag(ScrollLauncherType.HAS_FIRST_LAUNCHER_APP.name(), true);
 
+            //检查用户是否已经登陆
+        }
     }
 }
