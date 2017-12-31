@@ -11,7 +11,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.ArrayList;
 
 import linchange.com.core.R;
-import linchange.com.core.util.DimenUtil;
+import linchange.com.core.util.dimen.DimenUtil;
 
 /**
  * Created by lkmc2 on 2017/12/29.

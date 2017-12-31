@@ -2,12 +2,10 @@ package linchange.com.awesomeecommerce;
 
 import android.app.Application;
 
-import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 import linchange.com.core.app.Awesome;
 import linchange.com.core.net.intercepts.DebugInterceptor;
-import linchange.com.ec.font.FontEcModule;
 
 /**
  * Created by lkmc2 on 2017/12/27.

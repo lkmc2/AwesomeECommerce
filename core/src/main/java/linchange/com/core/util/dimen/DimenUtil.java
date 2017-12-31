@@ -1,4 +1,4 @@
-package linchange.com.core.util;
+package linchange.com.core.util.dimen;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;

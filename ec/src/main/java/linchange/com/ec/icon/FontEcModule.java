@@ -1,4 +1,4 @@
-package linchange.com.ec.font;
+package linchange.com.ec.icon;
 
 import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.IconFontDescriptor;

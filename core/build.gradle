@@ -56,4 +56,11 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
+    //Banner依赖
+    compile 'com.bigkoo:convenientbanner:2.0.5'
+    compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@arr'
+
+    //JSON依赖
+    compile 'com.alibaba:fastjson:1.2.31'
+
 }
