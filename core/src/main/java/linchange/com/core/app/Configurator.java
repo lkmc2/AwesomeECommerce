@@ -65,6 +65,16 @@ public class Configurator {
         return this;
     }
 
+    /**
+     * 延迟加载
+     * @param delayed 延迟时间
+     * @return 控制器
+     */
+    public final Configurator withLoaderDelayed(long delayed) {
+        AWESOME_CONFIGS.put(ConfigKeys.LOADER_DELAYED, delayed);
+        return this;
+    }
+
     //检查配置信息是否配置完成
     private void checkConfiguration() {
         //获取是否配置完成

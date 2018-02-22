@@ -12,6 +12,7 @@ import butterknife.OnClick;
 import linchange.com.core.delegates.AwesomeDelegate;
 import linchange.com.core.net.RestClient;
 import linchange.com.core.net.callback.ISuccess;
+import linchange.com.core.util.log.AwesomeLogger;
 import linchange.com.ec.R;
 import linchange.com.ec.R2;
 
@@ -40,19 +41,27 @@ public class SignUpDelegate extends AwesomeDelegate {
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp() {
         if (checkForm()) {
-//            RestClient.builder()
-//                    .url("sign_up")
-//                    .params("", "")
-//                    .success(new ISuccess() {
-//                        @Override
-//                        public void onSuccess(String response) {
-//
-//                        }
-//                    })
-//                    .build()
-//                    .post();
+            RestClient.builder()
+                    .url("http://or6naol85.bkt.clouddn.com/info.json")
+                    .params("", "")
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            AwesomeLogger.json("USER_PROFILE", response);
+                            AwesomeLogger.e(SignUpDelegate.class.getSimpleName(), response);
+                            SignHandler.onSignUp(response); //注册，将json数据持久化到本地
+                        }
+                    })
+                    .build()
+                    .post();
+            AwesomeLogger.e(SignUpDelegate.class.getSimpleName(), "执行完毕");
             Toast.makeText(getContext(), "验证通过", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @OnClick(R2.id.tv_link_sign_in)
+    void onClickLink() { //点击登陆链接
+        start(new SignInDelegate()); //启动登陆页面
     }
 
     private boolean checkForm() {

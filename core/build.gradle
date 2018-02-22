@@ -70,7 +70,7 @@ dependencies {
     compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@arr'
 
     //JSON依赖
-    compile 'com.alibaba:fastjson:1.2.31'
+    compile 'com.alibaba:fastjson:1.2.44'
 
     //Log
     compile 'com.orhanobut:logger:2.1.1'
