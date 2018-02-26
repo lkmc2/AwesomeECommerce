@@ -4,13 +4,20 @@ package linchange.com.awesomeecommerce;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.widget.Toast;
 
 import linchange.com.core.activities.ProxyActivity;
 import linchange.com.core.delegates.AwesomeDelegate;
+import linchange.com.core.ui.ILauncherListener;
+import linchange.com.core.ui.OnLauncherFinishTag;
+import linchange.com.ec.launcher.LauncherDelegate;
+import linchange.com.ec.sign.ISignListener;
 import linchange.com.ec.sign.SignInDelegate;
 
 
-public class MainActivity extends ProxyActivity {
+public class MainActivity extends ProxyActivity
+                            implements ISignListener,
+                                        ILauncherListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,7 +31,32 @@ public class MainActivity extends ProxyActivity {
     //设置根代理
     @Override
     public AwesomeDelegate setRootDelegate() {
-        return new SignInDelegate();
+        return new LauncherDelegate();
     }
 
+    @Override
+    public void onSignInSuccess() {
+        Toast.makeText(this, "登陆成功", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSignUpSuccess() {
+        Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLauncherFinish(OnLauncherFinishTag tag) {
+        switch (tag) {
+            case SIGN: //已登录
+                Toast.makeText(this, "启动结束，用户登陆了", Toast.LENGTH_LONG).show();
+                startWithPop(new ExampleDelegate());
+                break;
+            case NOT_SIGN: //未登录
+                Toast.makeText(this, "启动结束，用户没登陆", Toast.LENGTH_LONG).show();
+                startWithPop(new SignInDelegate()); //进入注册页面，并把上一页面清除
+                break;
+            default:
+                break;
+        }
+    }
 }

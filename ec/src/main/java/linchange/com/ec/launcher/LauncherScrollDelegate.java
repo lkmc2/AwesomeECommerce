@@ -1,5 +1,6 @@
 package linchange.com.ec.launcher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -9,7 +10,11 @@ import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 
+import linchange.com.core.app.AccountManager;
+import linchange.com.core.app.IUserChecker;
 import linchange.com.core.delegates.AwesomeDelegate;
+import linchange.com.core.ui.ILauncherListener;
+import linchange.com.core.ui.OnLauncherFinishTag;
 import linchange.com.core.util.launcher.LauncherHolderCreator;
 import linchange.com.core.util.storage.AwesomePreference;
 import linchange.com.ec.R;
@@ -19,10 +24,14 @@ import linchange.com.ec.R;
  * 启动页可滚动Fragment
  */
 
-public class LauncherScrollDelegate extends AwesomeDelegate implements OnItemClickListener {
+public class LauncherScrollDelegate
+                extends AwesomeDelegate
+                implements OnItemClickListener {
 
     private ConvenientBanner<Integer> mConvenientBanner = null; //轮播图控件
     private static final ArrayList<Integer> INTEGERS = new ArrayList<>(); //图片id列表
+
+    private ILauncherListener mLauncherListener; //启动监听器
 
     /**
      * 初始化轮播图
@@ -44,6 +53,15 @@ public class LauncherScrollDelegate extends AwesomeDelegate implements OnItemCli
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        if (activity instanceof ILauncherListener) {
+            mLauncherListener = (ILauncherListener) activity;
+        }
+    }
+
+    @Override
     public Object setLayout() {
         //初始化轮播图控件
         mConvenientBanner = new ConvenientBanner<Integer>(getContext());
@@ -62,6 +80,21 @@ public class LauncherScrollDelegate extends AwesomeDelegate implements OnItemCli
             AwesomePreference.setAppFlag(ScrollLauncherType.HAS_FIRST_LAUNCHER_APP.name(), true);
 
             //检查用户是否已经登陆
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if (mLauncherListener != null) {
+                        mLauncherListener.onLauncherFinish(OnLauncherFinishTag.SIGN); //启动结束登录事件
+                    }
+                }
+
+                @Override
+                public void onNotSignIn() {
+                    if (mLauncherListener != null) {
+                        mLauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGN); //启动结束未登录事件
+                    }
+                }
+            });
         }
     }
 }

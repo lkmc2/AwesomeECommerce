@@ -1,5 +1,6 @@
 package linchange.com.ec.launcher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
@@ -10,7 +11,11 @@ import java.util.Timer;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import linchange.com.core.app.AccountManager;
+import linchange.com.core.app.IUserChecker;
 import linchange.com.core.delegates.AwesomeDelegate;
+import linchange.com.core.ui.ILauncherListener;
+import linchange.com.core.ui.OnLauncherFinishTag;
 import linchange.com.core.util.storage.AwesomePreference;
 import linchange.com.core.util.timer.BaseTimerTask;
 import linchange.com.core.util.timer.ITimerListener;
@@ -28,6 +33,8 @@ public class LauncherDelegate extends AwesomeDelegate implements ITimerListener 
     AppCompatTextView mTvTimer = null; //文字控件
     private Timer mTimer = null; //时间控制器
     private int mCount = 5; //倒计时的数字
+
+    private ILauncherListener mLauncherListener; //启动监听器
 
     @OnClick(R2.id.tv_launcher_timer) //为文字控件设置点击事件
     void onClickTimerView() {
@@ -57,6 +64,15 @@ public class LauncherDelegate extends AwesomeDelegate implements ITimerListener 
         mTimer.schedule(task, 0, 1000); //设置计时任务到计时器
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        if (activity instanceof ILauncherListener) {
+            mLauncherListener = (ILauncherListener) activity;
+        }
+    }
+
     /**
      * 判断是否展示滚动启动页
      */
@@ -66,7 +82,21 @@ public class LauncherDelegate extends AwesomeDelegate implements ITimerListener 
             start(new LauncherScrollDelegate(), SINGLETASK); //启动滚动启动页
         } else { //非第一次启动
             //检查用户是否登录
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if (mLauncherListener != null) {
+                        mLauncherListener.onLauncherFinish(OnLauncherFinishTag.SIGN); //启动结束登录事件
+                    }
+                }
 
+                @Override
+                public void onNotSignIn() {
+                    if (mLauncherListener != null) {
+                        mLauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGN); //启动结束未登录事件
+                    }
+                }
+            });
         }
     }
 

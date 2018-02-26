@@ -1,9 +1,9 @@
 package linchange.com.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,6 +38,17 @@ public class SignUpDelegate extends AwesomeDelegate {
     @BindView(R2.id.edit_sign_up_re_password)
     TextInputEditText mRePassword = null; //重复密码输入框
 
+    private ISignListener mSignListener = null; //登陆注册监听器
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        if (activity instanceof ISignListener) { //activity实现了登陆注册监听器的接口
+            mSignListener = (ISignListener) activity;
+        }
+    }
+
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp() {
         if (checkForm()) {
@@ -49,7 +60,7 @@ public class SignUpDelegate extends AwesomeDelegate {
                         public void onSuccess(String response) {
                             AwesomeLogger.json("USER_PROFILE", response);
                             AwesomeLogger.e(SignUpDelegate.class.getSimpleName(), response);
-                            SignHandler.onSignUp(response); //注册，将json数据持久化到本地
+                            SignHandler.onSignUp(response, mSignListener); //注册，将json数据持久化到本地
                         }
                     })
                     .build()
@@ -73,40 +84,40 @@ public class SignUpDelegate extends AwesomeDelegate {
 
         boolean isPass = true; //是否通过
 
-        if (name.isEmpty()) {
-            mName.setError("请输入姓名");
-            isPass = false;
-        } else {
-            mName.setError(null);
-        }
-
-        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmail.setError("错误的邮箱格式");
-            isPass = false;
-        } else {
-            mEmail.setError(null);
-        }
-
-        if (phone.isEmpty() || phone.length() != 11) {
-            mPhone.setError("手机号码错误");
-            isPass = false;
-        } else {
-            mPhone.setError(null);
-        }
-
-        if (password.isEmpty() || password.length() < 6) {
-            mPassword.setError("密码不能少于6位");
-            isPass = false;
-        } else {
-            mPassword.setError(null);
-        }
-
-        if (rePassword.isEmpty() || rePassword.length() < 6 || !rePassword.equals(password)) {
-            mRePassword.setError("两次密码输入不一致");
-            isPass = false;
-        } else {
-            mRePassword.setError(null);
-        }
+//        if (name.isEmpty()) {
+//            mName.setError("请输入姓名");
+//            isPass = false;
+//        } else {
+//            mName.setError(null);
+//        }
+//
+//        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//            mEmail.setError("错误的邮箱格式");
+//            isPass = false;
+//        } else {
+//            mEmail.setError(null);
+//        }
+//
+//        if (phone.isEmpty() || phone.length() != 11) {
+//            mPhone.setError("手机号码错误");
+//            isPass = false;
+//        } else {
+//            mPhone.setError(null);
+//        }
+//
+//        if (password.isEmpty() || password.length() < 6) {
+//            mPassword.setError("密码不能少于6位");
+//            isPass = false;
+//        } else {
+//            mPassword.setError(null);
+//        }
+//
+//        if (rePassword.isEmpty() || rePassword.length() < 6 || !rePassword.equals(password)) {
+//            mRePassword.setError("两次密码输入不一致");
+//            isPass = false;
+//        } else {
+//            mRePassword.setError(null);
+//        }
 
         return isPass;
     }
