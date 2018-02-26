@@ -1,5 +1,7 @@
 package linchange.com.core.app;
 
+import android.app.Activity;
+
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 
@@ -142,6 +144,36 @@ public class Configurator {
      */
     public final Configurator withIcon(IconFontDescriptor descriptor) {
         ICONS.add(descriptor); //将图标添加到图标列表
+        return this;
+    }
+
+    /**
+     * 添加微信AppId
+     * @param appId 微信AppId
+     * @return 配置器对象
+     */
+    public final Configurator withWeChatAppId(String appId) {
+        AWESOME_CONFIGS.put(ConfigKeys.WE_CHAT_APP_ID, appId); //存储appid
+        return this;
+    }
+
+    /**
+     * 添加微信App密匙
+     * @param appSecrest 微信App密匙
+     * @return 配置器对象
+     */
+    public final Configurator withWeChatAppSecret(String appSecrest) {
+        AWESOME_CONFIGS.put(ConfigKeys.WE_CHAT_APP_ID, appSecrest); //存储appid
+        return this;
+    }
+
+    /**
+     * 添加Activity
+     * @param activity activity上下文
+     * @return 配置器对象
+     */
+    public final Configurator withActivity(Activity activity) {
+        AWESOME_CONFIGS.put(ConfigKeys.ACTIVITY, activity); //存储activity
         return this;
     }
 }

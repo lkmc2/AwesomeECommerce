@@ -14,6 +14,8 @@ import linchange.com.core.delegates.AwesomeDelegate;
 import linchange.com.core.net.RestClient;
 import linchange.com.core.net.callback.ISuccess;
 import linchange.com.core.util.log.AwesomeLogger;
+import linchange.com.core.wechat.AwesomeWeChat;
+import linchange.com.core.wechat.callback.IWeChatSignInCallback;
 import linchange.com.ec.R;
 import linchange.com.ec.R2;
 
@@ -64,7 +66,12 @@ public class SignInDelegate extends AwesomeDelegate {
 
     @OnClick(R2.id.icon_sign_in_wechat)
     void onClickWeChat() { //微信登陆点击事件
+        AwesomeWeChat.getInstance().onSignSuccess(new IWeChatSignInCallback() {
+            @Override
+            public void onSignInSuccess(String userInfo) {
 
+            }
+        }).signIn();
     }
 
     @OnClick(R2.id.tv_link_sign_up)

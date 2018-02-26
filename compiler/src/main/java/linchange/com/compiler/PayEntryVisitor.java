@@ -51,7 +51,7 @@ public final class PayEntryVisitor extends SimpleAnnotationValueVisitor7<Void, V
                 .build();
 
         final JavaFile javaFile = //生成java文件
-                JavaFile.builder(mPackageName + ".wapi", targetActivity)
+                JavaFile.builder(mPackageName + ".wxapi", targetActivity)
                         .addFileComment("微信支付入口文件") //注释
                         .build();
 

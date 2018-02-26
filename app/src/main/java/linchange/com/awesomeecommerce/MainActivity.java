@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.widget.Toast;
 
 import linchange.com.core.activities.ProxyActivity;
+import linchange.com.core.app.Awesome;
 import linchange.com.core.delegates.AwesomeDelegate;
 import linchange.com.core.ui.ILauncherListener;
 import linchange.com.core.ui.OnLauncherFinishTag;
@@ -26,6 +27,7 @@ public class MainActivity extends ProxyActivity
         if (actionBar != null) {
             actionBar.hide();
         }
+        Awesome.getConfigurator().withActivity(this); //存储activity对象到全局配置
     }
 
     //设置根代理
