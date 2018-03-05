@@ -1,4 +1,4 @@
-package linchange.com.core.ui;
+package linchange.com.core.ui.loader;
 
 import android.content.Context;
 

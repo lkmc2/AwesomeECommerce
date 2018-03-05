@@ -10,7 +10,7 @@ import linchange.com.core.net.callback.IError;
 import linchange.com.core.net.callback.IFailure;
 import linchange.com.core.net.callback.IRequest;
 import linchange.com.core.net.callback.ISuccess;
-import linchange.com.core.ui.LoaderStyle;
+import linchange.com.core.ui.loader.LoaderStyle;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 

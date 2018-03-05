@@ -3,8 +3,8 @@ package linchange.com.core.net.callback;
 
 import android.os.Handler;
 
-import linchange.com.core.ui.AwesomeLoader;
-import linchange.com.core.ui.LoaderStyle;
+import linchange.com.core.ui.loader.AwesomeLoader;
+import linchange.com.core.ui.loader.LoaderStyle;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

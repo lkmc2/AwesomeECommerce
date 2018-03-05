@@ -1,6 +1,7 @@
 package linchange.com.core.app;
 
 import android.app.Activity;
+import android.os.Handler;
 
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
@@ -16,6 +17,9 @@ import okhttp3.Interceptor;
  */
 
 public class Configurator {
+    //消息控制器
+    private static final Handler HANDLER = new Handler();
+
     //配置信息列表
     private static final HashMap<Object, Object> AWESOME_CONFIGS = new HashMap<>();
 
@@ -28,6 +32,7 @@ public class Configurator {
     //构造器
     private Configurator() {
         AWESOME_CONFIGS.put(ConfigKeys.CONFIG_READY, false); //设置配置未完成
+        AWESOME_CONFIGS.put(ConfigKeys.HANDLER, HANDLER); //设置消息控制器
     }
 
     //静态内部类

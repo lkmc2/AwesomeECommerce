@@ -8,23 +8,13 @@ import java.util.WeakHashMap;
 
 import io.reactivex.Observable;
 import linchange.com.core.net.HttpMethod;
-import linchange.com.core.net.RestClientBuilder;
 import linchange.com.core.net.RestCreator;
-import linchange.com.core.net.RestService;
-import linchange.com.core.net.callback.IError;
-import linchange.com.core.net.callback.IFailure;
-import linchange.com.core.net.callback.IRequest;
-import linchange.com.core.net.callback.ISuccess;
-import linchange.com.core.net.callback.RequestCallbacks;
-import linchange.com.core.net.download.DownloadHandler;
-import linchange.com.core.ui.AwesomeLoader;
-import linchange.com.core.ui.LoaderStyle;
+import linchange.com.core.ui.loader.AwesomeLoader;
+import linchange.com.core.ui.loader.LoaderStyle;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 /**
  * Created by lkmc2 on 2017/12/29.

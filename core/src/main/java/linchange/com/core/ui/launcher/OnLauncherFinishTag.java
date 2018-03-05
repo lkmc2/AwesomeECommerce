@@ -1,4 +1,4 @@
-package linchange.com.core.ui;
+package linchange.com.core.ui.launcher;
 
 /**
  * Created by lkmc2 on 2018/2/23.

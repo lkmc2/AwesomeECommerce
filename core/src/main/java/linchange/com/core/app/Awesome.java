@@ -1,8 +1,7 @@
 package linchange.com.core.app;
 
 import android.content.Context;
-
-import java.util.HashMap;
+import android.os.Handler;
 
 /**
  * Created by lkmc2 on 2017/12/27.
@@ -46,6 +45,14 @@ public class Awesome {
      */
     public static Context getApplicationContext() {
         return getConfiguration(ConfigKeys.APPLICATION_CONTEXT);
+    }
+
+    /**
+     * 获取Handler
+     * @return Handler实例
+     */
+    public static Handler getHandler() {
+        return getConfiguration(ConfigKeys.HANDLER);
     }
 
 }

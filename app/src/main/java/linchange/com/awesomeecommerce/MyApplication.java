@@ -23,7 +23,7 @@ public class MyApplication extends Application {
         Awesome.init(this) //初始化全局配置对象
                 .withIcon(new FontAwesomeModule()) //配置图标
 //                .withIcon(new FontEcModule())
-                .withApiHost("http://127.0.0.1/") //配置主机地址
+                .withApiHost("http://or6naol85.bkt.clouddn.com/") //配置主机地址
                 .withLoaderDelayed(1000) //延迟加载1s
                 .withInterceptor(new DebugInterceptor("index", R.raw.test))
                 .withWeChatAppId("") //微信appId
