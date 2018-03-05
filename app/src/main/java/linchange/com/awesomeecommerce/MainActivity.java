@@ -12,6 +12,7 @@ import linchange.com.core.delegates.AwesomeDelegate;
 import linchange.com.core.ui.ILauncherListener;
 import linchange.com.core.ui.OnLauncherFinishTag;
 import linchange.com.ec.launcher.LauncherDelegate;
+import linchange.com.ec.main.EcBottomDelegate;
 import linchange.com.ec.sign.ISignListener;
 import linchange.com.ec.sign.SignInDelegate;
 
@@ -51,7 +52,7 @@ public class MainActivity extends ProxyActivity
         switch (tag) {
             case SIGN: //已登录
                 Toast.makeText(this, "启动结束，用户登陆了", Toast.LENGTH_LONG).show();
-                startWithPop(new ExampleDelegate());
+                startWithPop(new EcBottomDelegate());
                 break;
             case NOT_SIGN: //未登录
                 Toast.makeText(this, "启动结束，用户没登陆", Toast.LENGTH_LONG).show();

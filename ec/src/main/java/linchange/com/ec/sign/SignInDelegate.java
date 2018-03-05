@@ -69,7 +69,7 @@ public class SignInDelegate extends AwesomeDelegate {
         AwesomeWeChat.getInstance().onSignSuccess(new IWeChatSignInCallback() {
             @Override
             public void onSignInSuccess(String userInfo) {
-
+                Toast.makeText(getContext(), userInfo, Toast.LENGTH_SHORT).show();
             }
         }).signIn();
     }
